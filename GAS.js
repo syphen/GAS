@@ -6486,7 +6486,7 @@ var GAS = function(account, settings){
 						//Checks the link to see if its domain matches the page domain, tracks an 'Outbound' view
 						case 'Outbound':
 						if(!done && myGAS.settings.trackOutbound){
-							if($gas(currentLink).attr("href").indexOf(myGAS.settings.base) > -1){
+							if(($gas(currentLink).attr("href").indexOf(myGAS.settings.base) > -1) && ($gas(currentLink).attr("href").indexOf('://') > -1)){
 								$gas(currentLink).click(function(){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/" + $gas(currentLink).attr("href");
 									myGAS.trackPage(trackValue);
