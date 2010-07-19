@@ -6240,237 +6240,382 @@ window.jQuery = window.$ = jQuery;
 })(window);
 
 /*!
- * GAS v0.2
+ * GAS
  * http://gas.catalystinc.com
  * Copyright 2010, Rui Da Costa
  * Dual licensed under the MIT or Creative Commons Attribution 3.0 Unported licenses.
  * http://gas.catalystinc.com/license
- * Date: Wed Jul 07 11:46:32 2010 -0500
  */
-gas$ = jQuery.noConflict(true);
+$gas = jQuery.noConflict(true);
 
-var GAS=function(g){
-	this.options=new Object({
-		name:"",
-		lightbox:"lightbox",
-		files:[{ext:"pdf",track:"pdf"}],
-		base:window.location.href.substring(0,window.location.href.lastIndexOf("/")+1),
-		domain:"",
-		page:"",
-		vars:[],
-		skip:[]
-	});
+var getObjForm = function(obj, myFormIndex){
+	var myParent = obj;
+	while(myParent.tagName.toLowerCase()!="form"){
+		myParent = $gas(myParent).parent().get(0);
+	}
+	var formName=(($gas(myParent).attr("name")!=undefined)&&($gas(myParent).attr("name")!="")&&($gas(myParent).attr("name")!=null))?$gas(myParent).attr("name"):(($gas(myParent).attr("id")!=undefined)&&($gas(myParent).attr("id")!="")&&($gas(myParent).attr("id")!=null))?$gas(myParent).attr("id"):"form"+myFormIndex;
+	return formName;
+};
+
+var GASConsole = function(){
+	if(typeof(console) !== 'undefined' && console != null) {
+		console.log('GAS:', arguments);
+	}
+};
+
+var GAS = function(account, settings){
+	this.account = account;
+	this.settings = settings;
+	this.tracker = '';
+	this.domain = '';
+	this.vars = [];
 	
-	this.init=function(a){
-		if(typeof a == 'object'){
-			this.options.account=(a.account!=undefined)?a.account:"";
-			this.options.name=(a.name!=undefined)?a.name:"";
-			this.options.lightbox=(a.lightbox!=undefined)?a.lightbox:"lightbox";
-			this.options.files=(a.files!=undefined)?a.files:[{ext:"pdf",track:"pdf"}];
-			this.options.base=(a.domain!=undefined)?a.domain:window.location.href.substring(0,window.location.href.lastIndexOf("/")+1);
-			this.options.domain=(a.domain!=undefined)?a.domain:"";
-			this.options.page=(a.page!=undefined)?a.page:"";
-			this.options.vars=(a.vars!=undefined)?a.vars:[];
-			this.options.skip=(a.skip!=undefined)?a.skip:[];
+	this.defaults = {
+		page: '',
+		base: window.location.href.substring(0,window.location.href.lastIndexOf("/")+1),
+		files: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip', 'mp3'],
+		debug:false,
+		trackPage:true,
+		trackOutbound:true,
+		trackFile:true,
+		trackHash:true,
+		trackLightbox:true,
+		lightboxClass:'lightbox',
+		trackMail:true,
+		trackForm:true,
+		trackFormField:true,
+		categoryOutbound:'Outbound',
+		categoryFile:'File',
+		categoryHash:'Hash',
+		categoryLightbox:'Lightbox',
+		categoryMail:'Mail',
+		categoryForm:'Form',
+		linkOrder:['Hash', 'Lightbox', 'File', 'Outbound', 'Mail']
+	};
+	
+	this.init = function(){
+		var myGAS = this;
+		myGAS.settings = ((typeof settings == 'object') && (settings != undefined))?settings:myGAS.defaults;
+		if(myGAS.settings.debug){
+			GASConsole('Init');
 		}
-		else if(typeof a == 'string'){
-			this.options.account = a;
+		myGAS.tracker = _gat._createTracker(myGAS.account);
+	};
+	this.init();
+	
+	this.setDomain = function(domain){
+		var myGAS = this;
+		if(myGAS.settings.debug){
+			GASConsole('Set Domain');
 		}
-		
-		this.gat = _gat;
-		if(this.options.name != ''){
-			this.tracker = this.gat._createTracker(this.options.account, this.options.name);
+		myGAS.domain = domain;
+		myGAS.tracker = _setDomainName(myGAS.domain);
+	};
+	
+	this.addVar = function(variable){
+		var myGAS = this;
+		if(myGAS.settings.debug){
+			GASConsole('Add Variable');
+		}
+		var myVar = new Object();
+		if(typeof variable == 'object'){
+			myVar.slot=(variable.slot!=undefined)?variable.slot:1;
+			myVar.name=(variable.name!=undefined)?variable.name:false;
+			myVar.value=(variable.value!=undefined)?variable.value:'';
+			myVar.scope=(variable.scope!=undefined)?variable.scope:'';
 		}
 		else {
-			this.tracker = this.gat._createTracker(this.options.account);
+			myVar.slot=1;
+			myVar.name=false;
+			myVar.value=variable;
+			myVar.scope=1;
+		}
+		if((myVar.value != undefined) && (myVar.value != '')){
+			myGAS.vars.push(myVar);
 		}
 	};
-	this.init(g);
-	this.set=function(a,b){
-		this.options[a]=b;
-	};
-	this.addFile=function(a,b){
-		this.options.files.push({ext:a,track:b});
-	};
-	this.addSkip=function(a){
-		this.options.skip.push(a);
-	};
-	this.addVar=function(a){
-		var b=new Object();
-		if(typeof a == 'object'){
-			b.slot=(a.slot!=undefined)?a.slot:1;
-			b.name=(a.name!=undefined)?a.name:false;
-			b.value=(a.value!=undefined)?a.value:'';
-			b.scope=(a.scope!=undefined)?a.scope:'';
+	
+	this.addFile = function(file){
+		var myGAS = this;
+		if(myGAS.settings.debug){
+			GASConsole('Add File');
 		}
-		else {
-			b.slot=1;
-			b.name=false;
-			b.value=a;
-			b.scope=1;
-		}
-		if(b.value!=false){
-			this.options.vars.push(b);
+		if($gas.inArray(file, myGAS.settings.files) < 0){
+			myGAS.settings.files.push(file);
 		}
 	};
-	this.getForm=function(o,myFindex){
-		var myP=o;
-		while(myP.tagName.toLowerCase()!="form"){
-			myP=gas$(myP).parent().get(0);
+	
+	this.trackPage = function(page){
+		var myGAS = this;
+		if(myGAS.settings.debug){
+			GASConsole('Track Page', page);
 		}
-		var fName=((gas$(myP).attr("name")!=undefined)&&(gas$(myP).attr("name")!="")&&(gas$(myP).attr("name")!=null))?gas$(myP).attr("name"):((gas$(myP).attr("id")!=undefined)&&(gas$(myP).attr("id")!="")&&(gas$(myP).attr("id")!=null))?gas$(myP).attr("id"):"form"+myFindex;
-		return fName;
-	};
-	this.run=function(){
-		var myGAS=this;
-		var continueOn=true;
-		var f = myGAS.tracker;
-		
-		if(myGAS.options.skip.length > 0){
-			var tempLoc=window.location.href.split("/");
-			tempLoc=tempLoc.pop();
-			tempLoc = tempLoc.split('?');
-			tempLoc = tempLoc[0];
-			tempLoc = tempLoc.split('#');
-			tempLoc = tempLoc[0];
-			if(gas$.inArray(tempLoc, myGAS.options.skip) >= 0){
-				continueOn=false;
-			}
-		}
-		
+		var pageTracker = myGAS.tracker;
 		try{
-			gas$(myGAS.options.vars).each(function(a){
-				if(typeof a == 'object' && (a.name != false)){
-					f._setCustomVar(a.slot,a.name,a.value,a.scope);
+			pageTracker._trackPageview(page);
+		}
+		catch(err){}
+	};
+	
+	this.trackEvent = function(category, action, label, value){
+		var myGAS = this;
+		if(myGAS.settings.debug){
+			GASConsole('Track Event', category, action, label, value);
+		}
+		try{
+			pageTracker._trackEvent(category, action, label, value);
+		}
+		catch(err){}
+	};
+	
+	//Historic 'run' function
+	this.run = function(){
+		this.pump();
+	};
+	
+	//Runs the Spider
+	this.pump = function(){
+		var myGAS = this;
+		if(myGAS.settings.debug){
+			GASConsole('Pump');
+		}
+		var pageTracker = myGAS.tracker;
+		
+		//Attempts to load the initial pageview tracking
+		try{
+			//Checks to see if any custom variables are set for Google Analytics from the GAS object settings
+			$gas(myGAS.vars).each(function(variable){
+				if(typeof variable == 'object' && (variable.name != false)){
+					pageTracker._setCustomVar(variable.slot, variable.name, variable.value, variable.scope);
 				}
-				else if(typeof a == 'string'){
-					f._setVar(a);
+				else if(typeof variable == 'string'){
+					pageTracker._setVar(variable);
 				}
 			});
-			if(myGAS.options.domain!=""){
-				f._setDomainName(myGAS.options.domain);
-			}
-			if(continueOn){
-				f._trackPageview(myGAS.options.page);
+			
+			//Runs the page track if 'trackPage' is set in settings.
+			if(myGAS.settings.trackPage){
+				myGAS.trackPage(myGAS.settings.page);
 			}
 		}
 		catch(err){}
 		
-		if(f){
-			gas$("a").each(function(){
-				var myA=this;
-				var d=false;
-				if(d){
-					if(gas$(myA).attr("href").indexOf('#') > -1){
-						var linkLoc = gas$(myA).attr("href").split('#');
-						var pageLoc = window.location.href.split('#');
-						linkLoc = linkLoc[0];
-						pageLoc = pageLoc[0];
-						if(((linkLoc == pageLoc) || (linkLoc == '')) && (gas$(myA).attr("href").split('#')[1] != '')){
-							gas$(myA).click(function(){
-								var a=myGAS.options.page+"/hash/"+gas$(myA).attr("href").split('#')[1];
-								f._trackPageview(a);
-							});
-							d=false;
-						}
-					}
+		
+		if(pageTracker){
+			//Begin Link Spider
+			jQuery("a").each(function(linkIndex, currentLink){
+				var done = false;
+				
+				//Checks the link for a 'href' attribute, otherwise skips the spider
+				if(!$gas(currentLink).attr("href")){
+					done = true;
 				}
-				if(d){
-					if(gas$(myA).hasClass(myGAS.options.lightbox)){
-						gas$(myA).click(function(){
-							var a=myGAS.options.page+"/lightbox/"+gas$(myA).attr("href");
-							f._trackPageview(a);
-						});
-						d=false;
-					}
+				var trackAs = '';
+				if($gas(currentLink).attr("trackas") && ($gas(currentLink).attr("trackas") != '')){
+					trackAs = $gas(currentLink).attr("trackas").toLowerCase();
 				}
-				if(d){
-					gas$(myGAS.options.files).each(function(i,b){
-						if(d){
-							var b=myGAS.options.files[i];
-							if(gas$(myA).attr("href").indexOf("."+b.ext)){
-								gas$(myA).click(function(){
-									var a=myGAS.options.page+"/"+b.track+"/"+gas$(myA).attr("href");
-									f._trackPageview(a);
-								});
-								d=false;
-							}
-						}
-					});
-				}
-				if(d){
-					if(gas$(myA).attr("href").indexOf(myGAS.options.base)){
-						gas$(myA).click(function(){
-							var a=myGAS.options.page+"/outgoing/"+gas$(myA).attr("href");
-							f._trackPageview(a);
-						});
-						d=false;
-					}
-				}
-				if(d){
-					if(gas$(myA).attr("href").indexOf("mailto:")){
-						var e=gas$(myA).attr("href").split(":",2);
-						e=e[1].split("?");
-						e=e[0];
-						gas$(myA).click(function(){
-							var a=myGAS.options.page+"/mailto/"+e;
-							f._trackPageview(a);
-						});
-						d=false;
-					}
-				}
-			});
-			gas$("form").each(function(index1){
-				var myF=this;
-				var myFindex=index1;
-				gas$(myF).find("input, select, textarea").each(function(index2,myI){
-					gas$(myI).focus(function(){
-						gas$(this).attr("startVal",gas$(this).val());
-					});
-					gas$(myI).blur(function(){
-						var v="";
-						if((gas$(myI).tagName=="select")&&(gas$(myI).attr("multiple")!="")){
-							var vs=new Array();
-							for(var o=0;o<this.options.length;o++){
-								myO=this.options[o];
-								if(myO.selected){
-									vs.push(myO.value);
+				
+				//Runs the spider based on the order from 'linkOrder' in the settings
+				for(var i = 0; i<myGAS.settings.linkOrder.length; i++){
+					var currentOrder = myGAS.settings.linkOrder[i];
+					switch (currentOrder){
+						
+						//Checks for # in the link and if it is the same page as the current page, tracks a 'Hash' view
+						case 'Hash':
+						if(!done && myGAS.settings.trackHash){
+							if($gas(currentLink).attr("href").indexOf('#') > -1){
+								var linkLoc = ($gas(currentLink).attr("href").split('#'))[0];
+								var pageLoc = (window.location.href.split('#'))[0];
+								if(((linkLoc == pageLoc) || (linkLoc == '')) && ($gas(currentLink).attr("href").split('#')[1] != '')){
+									$gas(currentLink).click(function(){
+										var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/" + $gas(currentLink).attr("href").split('#')[1];
+										myGAS.trackPage(trackValue);
+									});
+									done = true;
 								}
 							}
-							v=vs.toString();
-						}
-						else{
-							v=gas$(myI).val();
-						}
-						if((v!=null)&&(v!=undefined)){
-							var startVal=((gas$(myI).get("startVal")!=undefined)&&(myI.get("startVal")!=null))?myI.get("startVal"):"";
-							var aName="no change";
-							var fName=myGAS.getForm(this,myFindex);
-							var iName=gas$(myI).attr("name");
-							if(v!=startVal){
-								aName="change";
+							if(!done && trackAs == 'hash'){
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/" + $gas(currentLink).attr("href");
+								myGAS.trackPage(trackValue);
+								done = true;
 							}
-							f._trackEvent(fName,aName,iName,v);
+						}
+						break;
+						
+						//Checks for the specified 'lightbox' class on the link, tracks a 'Lightbox' view
+						case 'Lightbox':
+						if(!done && myGAS.settings.trackLightbox){
+							if($gas(currentLink).hasClass(myGAS.settings.lightboxClass)){
+								$gas(currentLink).click(function(){
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/" + $gas(currentLink).attr("href");
+									myGAS.trackPage(trackValue);
+								});
+								done = true;
+							}
+							if(!done && trackAs == 'lightbox'){
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/" + $gas(currentLink).attr("href");
+								myGAS.trackPage(trackValue);
+								done = true;
+							}
+						}
+						break;
+						
+						//Checks the file extension on the link, if it matches the list of trackable files, tracks a 'File' view
+						case 'File':
+						if(!done && myGAS.settings.trackFile){
+							$gas(myGAS.settings.files).each(function(index, file){
+								if(!done){
+									var file=myGAS.settings.files[index];
+									if(($gas(currentLink).attr("href").indexOf("."+file) > -1)){
+										$gas(currentLink).click(function(){
+											var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/" + file + "/" + $gas(currentLink).attr("href");
+											myGAS.trackPage(trackValue);
+										});
+										done = true;
+									}
+								}
+							});
+							if(!done && trackAs == 'file'){
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/" + $gas(currentLink).attr("href");
+								myGAS.trackPage(trackValue);
+								done = true;
+							}
+						}
+						break;
+						
+						//Checks the link to see if its domain matches the page domain, tracks an 'Outbound' view
+						case 'Outbound':
+						if(!done && myGAS.settings.trackOutbound){
+							if($gas(currentLink).attr("href").indexOf(myGAS.settings.base) > -1){
+								$gas(currentLink).click(function(){
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/" + $gas(currentLink).attr("href");
+									myGAS.trackPage(trackValue);
+								});
+								done = true;
+							}
+							if(!done && trackAs == 'outbound'){
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/" + $gas(currentLink).attr("href");
+								myGAS.trackPage(trackValue);
+								done = true;
+							}
+						}
+						break;
+						
+						//Checks the link for a 'mailto:', tracks a 'Mail' view
+						case 'Mail':
+						if(!done && myGAS.settings.trackMail){
+							if($gas(currentLink).attr("href").indexOf("mailto:") > -1){
+								var email = (($gas(currentLink).attr("href").split(":",2))[1].split("?"))[0];
+								$gas(currentLink).click(function(){
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/" + email;
+									myGAS.trackPage(trackValue);
+								});
+								done = true;
+							}
+							if(!done && trackAs == 'mail'){
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/" + $gas(currentLink).attr("href");
+								myGAS.trackPage(trackValue);
+								done = true;
+							}
+						}
+						break;
+					}
+				}
+			});
+			//End Link Spider
+			
+			
+			//Start Form Spider
+			$gas("form").each(function(formIndex){
+				var myForm = this;
+				var myFormIndex = formIndex;
+				
+				//Runs form field spider if 'trackFormField' is set in settings
+				if(myGAS.settings.trackFormField){
+					
+					//Spiders input, select and textareas
+					$gas(myForm).find("input, select, textarea").each(function(inputIndex,myInput){
+						
+						//Stores the start value for the field when it is focused
+						$gas(myInput).focus(function(){
+							var myValue = '';
+							if(($gas(myInput).tagName=="select") && ($gas(myInput).attr("multiple")!="")){
+								var myValues = new Array();
+								for(var o=0; o<this.options.length; o++){
+									var myOption = this.options[o];
+									if(myOption.selected){
+										myValues.push(myOption.value);
+									}
+								}
+								myValue = myValues.toString();
+							}
+							else{
+								myValue = $gas(myInput).val();
+							}
+							myValue = escape(myValue);
+							$gas(myInput).attr("startValue", myValue);
+						});
+						
+						//Checks to see if the value on blur is the same as the start value
+						$gas(myInput).blur(function(){
+							var myValue = "";
+							
+							//Catch for a select with multiple options
+							if(($gas(myInput).tagName=="select") && ($gas(myInput).attr("multiple")!="")){
+								var myValues = new Array();
+								for(var o=0; o<this.options.length; o++){
+									var myOption = this.options[o];
+									if(myOption.selected){
+										myValues.push(myOption.value);
+									}
+								}
+								myValue = myValues.toString();
+							}
+							else{
+								myValue = $gas(myInput).val();
+							}
+							myValue = escape(myValue);
+							
+							//Compares start and current values
+							if((myValue != null) && (myValue != undefined)){
+								var formName = getObjForm(this, myFormIndex);
+								var inputName= (($gas(myInput).attr("name")!=undefined)&&($gas(myInput).attr("name")!="")&&($gas(myInput).attr("name")!=null))?$gas(myInput).attr("name"):(($gas(myInput).attr("id")!=undefined)&&($gas(myInput).attr("id")!="")&&($gas(myInput).attr("id")!=null))?$gas(myInput).attr("id"):"Option"+inputIndex;
+								var startValue = (($gas(myInput).attr("startValue") != undefined) && ($gas(myInput).attr("startValue") != null))?$gas(myInput).attr("startValue"):"";
+								var actionName = "No_Change";
+								if(myValue != startValue){
+									actionName="Change";
+								}
+								myValue = unescape(myValue);
+								myGAS.trackEvent(formName,actionName,inputName,myValue);
+							}
+						});
+						
+						//Tracks an event for button presses, submit presses, reset presses and checkbox presses
+						if(($gas(myInput).attr("type")!=null)&&($gas(myInput).attr("type")!=undefined)&&($gas(myInput).attr("type")!="")&&(($gas(myInput).attr("type").toLowerCase()=="button")||($gas(myInput).attr("type").toLowerCase()=="submit")||($gas(myInput).attr("type").toLowerCase()=="reset")||($gas(myInput).attr("type").toLowerCase()=="image")||($gas(myInput).attr("type").toLowerCase()=="checkbox")||($gas(myInput).attr("type").toLowerCase()=="radio"))){
+							$gas(myInput).click(function(){
+								var formName = getObjForm(this,myFormIndex);
+								var inputName= (($gas(myInput).attr("name")!=undefined)&&($gas(myInput).attr("name")!="")&&($gas(myInput).attr("name")!=null))?$gas(myInput).attr("name"):(($gas(myInput).attr("id")!=undefined)&&($gas(myInput).attr("id")!="")&&($gas(myInput).attr("id")!=null))?$gas(myInput).attr("id"):"Option"+inputIndex;
+								var actionName="Click";
+								var myValue = ($gas(myInput).val()!="")?$gas(myInput).val():"";
+								myGAS.trackEvent(formName,actionName,inputName,myValue);
+							});
 						}
 					});
-					if((gas$(myI).attr("type")!=null)&&(gas$(myI).attr("type")!=undefined)&&(gas$(myI).attr("type")!="")&&((gas$(myI).attr("type").toLowerCase()=="button")||(gas$(myI).attr("type").toLowerCase()=="submit")||(gas$(myI).attr("type").toLowerCase()=="reset")||(gas$(myI).attr("type").toLowerCase()=="image")||(gas$(myI).attr("type").toLowerCase()=="checkbox")||(gas$(myI).attr("type").toLowerCase()=="radio"))){
-						gas$(myI).click(function(){
-							var fName=myGAS.getForm(this,myFindex);
-							var iName=gas$(myI).attr("name");
-							var aName="click";
-							var v=(gas$(myI).val()!="")?gas$(myI).val():"";f._trackEvent(fName,aName,iName,v);
-						});
-					}
-				});
-				gas$(myF).submit(function(){
-					var fName=myGAS.getForm(this,myFindex);
-					var a=myGAS.options.page+"/"+fName+"/submitted";
-					f._trackEvent(fName,"Submit");
-					f._trackPageview(a);
-				});
+				}
+				
+				//Form tracking if 'trackForm' is enabled in the settings
+				if(myGAS.settings.trackForm){
+					$gas(myForm).submit(function(){
+						var formName = getObjForm(this,myFormIndex);
+						var trackValue = myGAS.options.page + "/" + myGAS.settings.categoryForm + "/" + formName + "/Submit";
+						myGAS.trackEvent(fName,"Submit");
+						myGAS.trackPage(trackValue);
+					});
+				}
 			});
+			//End Form Spider
 		}
-	}
+	};
 };
 
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
