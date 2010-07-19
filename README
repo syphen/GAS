@@ -1,0 +1,274 @@
+README
+========================================================
+GAS v0.2
+http://gas.catalystinc.com
+Copyright 2010, Rui Da Costa
+Dual licensed under the MIT or Creative Commons Attribution 3.0 Unported licenses.
+http://gas.catalystinc.com/license
+
+
+ABOUT
+========================================================
+The Google Analytics Spider is the result of a bunch of extra needs from Google Analytics that just aren't included. The script adds more robust link tracking, form field tracking, form submission, manual file skipping and the list continues to grow.
+
+
+
+USAGE
+========================================================
+After you have downloaded the GAS script and placed it on your server, paste the following code just before your </body> tag in your code.
+Note: Make sure you update your uacode with the correct Google Analytics code.
+
+Usage:
+<script type="text/javascript" src="./GAS.js"></script>
+<script type="text/javascript">
+	var my_gas = new GAS('UA-XXXXXXXX-X');
+	my_gas.pump();
+</script>
+
+
+FUNCTIONS
+========================================================
+
+init(account, [{settings}])
+-----------------------------
+This function initiates the GAS object.
+This function takes a Google Analytics account string and an optional settings object as its arguments.
+Usage (account):
+var my_gas = new GAS('UA-XXXXXXXX-X');
+
+Usage (account, {settings}):
+var my_gas = new GAS('UA-XXXXXXXX-X', {settings});
+
+
+pump()
+-----------------------------
+This function runs the GAS script based on the settings in place.
+This function has no arguments.
+Usage:
+var my_gas = new GAS('UA-XXXXXXXX-X');
+my_gas.pump();
+
+
+addFile(extenstion)
+-----------------------------
+This function is used for adding different documents to track.
+This function takes an extenstion string as its argument.
+Usage:
+var my_gas = new GAS('UA-XXXXXXXX-X');
+my_gas.addFile('xls');
+
+
+addVar(value) / addVar({customVar})
+-----------------------------
+This function is for adding Variables and Custom Variables to your page.
+View more about the basics of tracking configuration.
+This function takes either a value or a custom variable object as its argument.
+Usage (value):
+var my_gas = new GAS('UA-XXXXXXXX-X');
+my_gas.addVar('tracked');
+
+Usage ({customVar}):
+var my_gas = new GAS('UA-XXXXXXXX-X');
+my_gas.addVar({'slot':'1', 'name':'User', 'value':'myUser', 'scope':2});
+
+
+trackPage(page)
+-----------------------------
+This function runs a page view for your Google Analytics object.
+This function takes an optional page value string as its argument.
+Usage: 
+var my_gas = new GAS('UA-XXXXXXXX-X');
+my_gas.trackPage('Homepage');
+
+
+trackEvent(category, action, [label], [value])
+-----------------------------
+This function runs an event view for your Google Analytics object. View more about Google Analytics Event tracking (http://code.google.com/apis/analytics/docs/tracking/eventTrackerGuide.html).
+This function takes a category string, action string, optional label string and optional value string as its arguments.
+Usage: 
+var my_gas = new GAS('UA-XXXXXXXX-X');
+my_gas.trackEvent('Sorting', 'Ascending', 'States');
+
+
+
+SETTINGS
+========================================================
+
+OVERVIEW
+-----------------------------
+These settings can be set either in the init function or individually.
+init usage:
+var settings = {'settingName':'settingValue'};
+var my_gas('UA-XXXXXXXX-X', settings);
+
+individual usage:
+var settings = {'setting1Name':'setting1Value', 'setting2Name':'setting2Value'};
+var my_gas('UA-XXXXXXXX-X');
+my_gas.settings.settingName = 'settingValue';
+
+
+settings.page (string)
+-----------------------------
+This sets the variable that is used for the initial page view and gets prepended to all other tracking events from this page.
+Default is an empty string (Google default)
+Usage:
+var settings = {'page':'myHome'};
+
+
+settings.base (string)
+-----------------------------
+This sets the variable that is used to compare outbound links from internal links.
+Default is the current page's domain
+Usage: 
+var settings = {'base':'http://test.com'};
+
+
+settings.files (array)
+-----------------------------
+This sets the different file types that will track as 'Files'.
+Default: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip', 'mp3']
+Usage: 
+var settings = {'files', ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip', 'mp3']};
+
+
+settings.lightboxClass (array)
+-----------------------------
+This sets the class that a lightbox script attaches to links.
+Default: 'lightbox'
+Usage: 
+var settings = {'lightboxClass':'hoverBox'};
+
+
+settings.debug (boolean)
+-----------------------------
+This sets the option to display debug messages in a console or as window alerts (depends on browser).
+Default is set to 'false'
+Usage: 
+var settings = {'debug':true};
+
+
+settings.trackPage (boolean)
+-----------------------------
+This sets whether or not to track the current page on initial load.
+Default is set to 'true'
+Usage: 
+var settings = {'trackPage':true};
+
+
+settings.trackOutbound (boolean)
+-----------------------------
+This sets whether or not to track outbound link clicks.
+Default is set to 'true'
+Usage: 
+var settings = {'trackOutbound':true};
+
+
+settings.trackFile (boolean)
+-----------------------------
+This sets whether or not to track file link clicks based on the settings.files array.
+Default is set to 'true'
+Usage: 
+var settings = {'trackFile':true};
+
+
+settings.trackHash (boolean)
+-----------------------------
+This sets whether or not to track hash link clicks. It will register the value after the '#' of the link.
+Default is set to 'true'
+Usage: 
+var settings = {'trackHash':true};
+
+
+settings.trackLightbox (boolean)
+-----------------------------
+This sets whether or not to track lightbox link clicks based on the settings.lightboxClass string.
+Default is set to 'true'
+Usage: 
+var settings = {'trackLightbox':true};
+
+
+settings.trackMail (boolean)
+-----------------------------
+This sets whether or not to track mailto link clicks. It will register the string after the 'mailto:' of the link.
+Default is set to 'true'
+Usage: 
+var settings = {'trackMail':true};
+
+
+settings.trackForm (boolean)
+-----------------------------
+This sets whether or not to track form submissions. It will register the name/id/or index of the form.
+Default is set to 'true'
+Usage: 
+var settings = {'trackForm':true};
+
+
+settings.trackFormField (boolean)
+-----------------------------
+This sets whether or not to track individual form field changes. It will register the name/id/or index of the object, if it was changed and its value.
+Default is set to 'true'
+Usage: 
+var settings = {'trackFormField':true};
+
+
+settings.categoryOutbound (string)
+-----------------------------
+This sets what to prepend to links marked as 'Outbound'.
+Default is set to 'Outbound'
+Usage: 
+var settings = {'categoryOutbound':'Outbound'};
+
+
+settings.categoryFile (string)
+-----------------------------
+This sets what to prepend to links marked as 'File'.
+Default is set to 'File'
+Usage: 
+var settings = {'categoryFile':'File'};
+
+
+settings.categoryHash (string)
+-----------------------------
+This sets what to prepend to links marked as 'Hash'.
+Default is set to 'Hash'
+Usage: 
+var settings = {'categoryHash':'Hash'};
+
+
+settings.categoryLightbox (string)
+-----------------------------
+This sets what to prepend to links marked as 'Lightbox'.
+Default is set to 'Lightbox'
+Usage: 
+var settings = {'categoryLightbox':'Lightbox'};
+
+
+settings.categoryMail (string)
+-----------------------------
+This sets what to prepend to links marked as 'Mail'.
+Default is set to 'Mail'
+Usage: 
+var settings = {'categoryMail':'Mail'};
+
+
+settings.categoryForm (string)
+-----------------------------
+This sets what to prepend to links marked as 'Form'. This also prepends form field changes.
+Default is set to 'Form'
+Usage: 
+var settings = {'categoryForm':'Form'};
+
+
+settings.linkOrder (array)
+-----------------------------
+This sets what order to parse links as. This is helpful if you want to change functionality for outbound links or links that may lump into more than one category.
+Default is set to ['Hash', 'Lightbox', 'File', 'Outbound', 'Mail']
+Usage: 
+var settings = ['Hash', 'Lightbox', 'File', 'Outbound', 'Mail'];
+
+
+trackas (string)
+-----------------------------
+This is an attribute you can add to any link to overwrite how it will track.
+Usage: 
+<a href="#test" class="lightbox" trackas="file">Click here</a>
