@@ -6539,7 +6539,7 @@ var GAS = function(account, settings){
 						//Stores the start value for the field when it is focused
 						$gas(myInput).focus(function(){
 							var myValue = '';
-							if(($gas(myInput).tagName=="select") && ($gas(myInput).attr("multiple")!="")){
+							if(($gas(myInput).get(0).tagName.toLowerCase()=="select") && ($gas(myInput).attr("multiple")!="")){
 								var myValues = new Array();
 								for(var o=0; o<this.options.length; o++){
 									var myOption = this.options[o];
@@ -6561,7 +6561,7 @@ var GAS = function(account, settings){
 							var myValue = "";
 							
 							//Catch for a select with multiple options
-							if(($gas(myInput).tagName=="select") && ($gas(myInput).attr("multiple")!="")){
+							if(($gas(myInput).get(0).tagName.toLowerCase()=="select") && ($gas(myInput).attr("multiple")!="")){
 								var myValues = new Array();
 								for(var o=0; o<this.options.length; o++){
 									var myOption = this.options[o];
