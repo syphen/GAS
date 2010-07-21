@@ -6586,7 +6586,7 @@ var GAS = function(account, settings){
 									actionName="Change";
 								}
 								myValue = unescape(myValue);
-								myGAS.trackEvent(formName,actionName,inputName,myValue);
+								myGAS.trackEvent(formName.toString(),actionName.toString(),inputName.toString(),myValue.toString());
 							}
 						});
 						
@@ -6597,7 +6597,7 @@ var GAS = function(account, settings){
 								var inputName= (($gas(myInput).attr("name")!=undefined)&&($gas(myInput).attr("name")!="")&&($gas(myInput).attr("name")!=null))?$gas(myInput).attr("name"):(($gas(myInput).attr("id")!=undefined)&&($gas(myInput).attr("id")!="")&&($gas(myInput).attr("id")!=null))?$gas(myInput).attr("id"):"Option"+inputIndex;
 								var actionName="Click";
 								var myValue = ($gas(myInput).val()!="")?$gas(myInput).val():"";
-								myGAS.trackEvent(formName,actionName,inputName,myValue);
+								myGAS.trackEvent(formName.toString(),actionName.toString(),inputName.toString(),myValue.toString());
 							});
 						}
 					});
