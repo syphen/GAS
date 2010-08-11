@@ -5,7 +5,7 @@
  * Dual licensed under the MIT or Creative Commons Attribution 3.0 Unported licenses.
  * http://gas.catalystinc.com/license
  */
-$gas = jQuery.noConflict(true);
+$gas = window.jQuery;
 
 var getObjForm = function(obj, myFormIndex){
 	var myParent = obj;
