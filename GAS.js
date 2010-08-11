@@ -6410,7 +6410,7 @@ var GAS = function(account, settings){
 		
 		if(pageTracker){
 			//Begin Link Spider
-			jQuery("a").each(function(linkIndex, currentLink){
+			$gas("a").each(function(linkIndex, currentLink){
 				var done = false;
 				
 				//Checks the link for a 'href' attribute, otherwise skips the spider
