@@ -528,7 +528,7 @@ var GAS = function(account, settings){
 					$gas(myForm).submit(function(){
 						var formName = getObjForm(this,myFormIndex);
 						var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryForm + "/" + formName + "/Submit";
-						myGAS.trackEvent(fName,"Submit");
+						myGAS.trackEvent(formName,"Submit");
 						myGAS.trackPage(trackValue);
 					});
 				}
