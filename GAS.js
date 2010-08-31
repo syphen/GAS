@@ -279,7 +279,7 @@ var GAS = function(account, settings){
 		}
 		try{
 			if(value.toString().search(/^-?[0-9]+$/) == 0){
-				pageTracker._trackEvent(category, action, label, value);
+				pageTracker._trackEvent(category, action, label, value.parseInt());
 			}
 			else {
 				pageTracker._trackEvent(category, action, label+'|'+value);
@@ -527,7 +527,7 @@ var GAS = function(account, settings){
 				if(myGAS.settings.trackForm){
 					$gas(myForm).submit(function(){
 						var formName = getObjForm(this,myFormIndex);
-						var trackValue = myGAS.options.page + "/" + myGAS.settings.categoryForm + "/" + formName + "/Submit";
+						var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryForm + "/" + formName + "/Submit";
 						myGAS.trackEvent(fName,"Submit");
 						myGAS.trackPage(trackValue);
 					});
