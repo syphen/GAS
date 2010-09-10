@@ -306,6 +306,7 @@ var GAS = function(account, settings){
 			//Checks to see if any custom variables are set for Google Analytics from the GAS object settings
 			$gas(myGAS.vars).each(function(variable){
 				if(typeof variable == 'object' && (variable.name != false)){
+					GASConsole(variable);
 					pageTracker._setCustomVar(variable.slot, variable.name, variable.value, variable.scope);
 				}
 				else if(typeof variable == 'string'){
