@@ -304,8 +304,8 @@ var GAS = function(account, settings){
 		//Attempts to load the initial pageview tracking
 		try{
 			//Checks to see if any custom variables are set for Google Analytics from the GAS object settings
+			GASConsole(myGAS.vars);
 			$gas(myGAS.vars).each(function(variable){
-				GASConsole(variable);
 				if(typeof variable == 'object' && (variable.name != false)){
 					pageTracker._setCustomVar(variable.slot, variable.name, variable.value, variable.scope);
 				}
