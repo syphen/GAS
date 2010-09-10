@@ -211,6 +211,11 @@ var GAS = function(account, settings){
 	this.init = function(){
 		var myGAS = this;
 		myGAS.settings = ((typeof settings == 'object') && (settings != undefined))?settings:myGAS.defaults;
+		if(window.location.hash != ''){
+			if(window.location.hash.search('GASdebug') > 0){
+				myGAS.settings.debug = true;
+			}
+		}
 		if(myGAS.settings.debug){
 			GASConsole('Init');
 		}
@@ -307,12 +312,14 @@ var GAS = function(account, settings){
 			if(myGAS.vars.length > 0){
 				for(var i=0; i<myGAS.vars.length; i++){
 					var variable = myGAS.vars[i];
-					GASConsole(variable);
 					if(typeof variable == 'object' && (variable.name != false)){
 						pageTracker._setCustomVar(variable.slot, variable.name, variable.value, variable.scope);
 					}
 					else if(typeof variable == 'string'){
 						pageTracker._setVar(variable);
+					}
+					if(myGAS.settings.debug){
+						GASConsole('Variable Set', variable);
 					}
 				}
 			};
