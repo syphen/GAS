@@ -161,6 +161,7 @@ e&&e.document?e.document.compatMode==="CSS1Compat"&&e.document.documentElement["
  * Dual licensed under the MIT or Creative Commons Attribution 3.0 Unported licenses.
  * http://gas.catalystinc.com/license
  */
+jQuery.noConflict();
 $gas = window.jQuery;
 
 var getObjForm = function(obj, myFormIndex){
