@@ -200,6 +200,7 @@ var GAS = function(account, settings){
 		trackMail:true,
 		trackForm:true,
 		trackFormField:true,
+		trackUsingHref:true,
 		categoryOutbound:'Outbound',
 		categoryFile:'File',
 		categoryHash:'Hash',
@@ -367,7 +368,15 @@ var GAS = function(account, settings){
 								}
 							}
 							if(!done && trackAs == 'hash'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/" + $gas(currentLink).attr("href");
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/";
+								if (myGAS.settings.trackUsingHref)
+								{
+									trackValue += $gas(currentLink).attr("href");								
+								}
+								else
+								{
+									trackValue += $gas(currentLink).innerHTML;
+								}
 								myGAS.trackPage(trackValue);
 								done = true;
 							}
@@ -379,13 +388,29 @@ var GAS = function(account, settings){
 						if(!done && myGAS.settings.trackLightbox){
 							if($gas(currentLink).hasClass(myGAS.settings.lightboxClass)){
 								$gas(currentLink).click(function(){
-									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/" + $gas(currentLink).attr("href");
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/";
+									if (myGAS.settings.trackUsingHref)
+									{
+										trackValue += $gas(currentLink).attr("href");								
+									}
+									else
+									{
+										trackValue += $gas(currentLink).innerHTML;
+									}
 									myGAS.trackPage(trackValue);
 								});
 								done = true;
 							}
 							if(!done && trackAs == 'lightbox'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/" + $gas(currentLink).attr("href");
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/";
+								if (myGAS.settings.trackUsingHref)
+								{
+									trackValue += $gas(currentLink).attr("href");								
+								}
+								else
+								{
+									trackValue += $gas(currentLink).innerHTML;
+								}
 								myGAS.trackPage(trackValue);
 								done = true;
 							}
@@ -400,7 +425,15 @@ var GAS = function(account, settings){
 									var file=myGAS.settings.files[index];
 									if(($gas(currentLink).attr("href").indexOf("."+file) > -1)){
 										$gas(currentLink).click(function(){
-											var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/" + file + "/" + $gas(currentLink).attr("href");
+											var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/" + file + "/";
+											if (myGAS.settings.trackUsingHref)
+											{
+												trackValue += $gas(currentLink).attr("href");								
+											}
+											else
+											{
+												trackValue += $gas(currentLink).innerHTML;
+											}
 											myGAS.trackPage(trackValue);
 										});
 										done = true;
@@ -408,7 +441,16 @@ var GAS = function(account, settings){
 								}
 							});
 							if(!done && trackAs == 'file'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/" + $gas(currentLink).attr("href");
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/";
+								if (trackUsingHref)
+								{
+									trackValue += $gas(currentLink).attr("href");								
+								}
+								else
+								{
+									trackValue += $gas(currentLink).innerHTML;
+								}
+									
 								myGAS.trackPage(trackValue);
 								done = true;
 							}
@@ -420,13 +462,29 @@ var GAS = function(account, settings){
 						if(!done && myGAS.settings.trackOutbound){
 							if(($gas(currentLink).attr("href").indexOf(myGAS.settings.base) > -1) && ($gas(currentLink).attr("href").indexOf('://') > -1)){
 								$gas(currentLink).click(function(){
-									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/" + $gas(currentLink).attr("href");
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/";
+									if (myGAS.settings.trackUsingHref)
+									{
+										trackValue += $gas(currentLink).attr("href");								
+									}
+									else
+									{
+										trackValue += $gas(currentLink).innerHTML;
+									}
 									myGAS.trackPage(trackValue);
 								});
 								done = true;
 							}
 							if(!done && trackAs == 'outbound'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/" + $gas(currentLink).attr("href");
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/";
+								if (myGAS.settings.trackUsingHref)
+								{
+									trackValue += $gas(currentLink).attr("href");								
+								}
+								else
+								{
+									trackValue += $gas(currentLink).innerHTML;
+								}
 								myGAS.trackPage(trackValue);
 								done = true;
 							}
@@ -445,7 +503,15 @@ var GAS = function(account, settings){
 								done = true;
 							}
 							if(!done && trackAs == 'mail'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/" + $gas(currentLink).attr("href");
+								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/";
+								if (myGAS.settings.trackUsingHref)
+								{
+									trackValue += $gas(currentLink).attr("href");								
+								}
+								else
+								{
+									trackValue += $gas(currentLink).innerHTML;
+								}
 								myGAS.trackPage(trackValue);
 								done = true;
 							}
