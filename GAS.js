@@ -375,7 +375,7 @@ var GAS = function(account, settings){
 								}
 								else
 								{
-									trackValue += $gas(currentLink).innerHTML;
+									trackValue += $gas(currentLink).html();
 								}
 								myGAS.trackPage(trackValue);
 								done = true;
@@ -395,7 +395,7 @@ var GAS = function(account, settings){
 									}
 									else
 									{
-										trackValue += $gas(currentLink).innerHTML;
+										trackValue += $gas(currentLink).html();
 									}
 									myGAS.trackPage(trackValue);
 								});
@@ -409,7 +409,7 @@ var GAS = function(account, settings){
 								}
 								else
 								{
-									trackValue += $gas(currentLink).innerHTML;
+									trackValue += $gas(currentLink).html();
 								}
 								myGAS.trackPage(trackValue);
 								done = true;
@@ -432,7 +432,7 @@ var GAS = function(account, settings){
 											}
 											else
 											{
-												trackValue += $gas(currentLink).innerHTML;
+												trackValue += $gas(currentLink).html();
 											}
 											myGAS.trackPage(trackValue);
 										});
@@ -448,7 +448,7 @@ var GAS = function(account, settings){
 								}
 								else
 								{
-									trackValue += $gas(currentLink).innerHTML;
+									trackValue += $gas(currentLink).html();
 								}
 									
 								myGAS.trackPage(trackValue);
@@ -469,7 +469,7 @@ var GAS = function(account, settings){
 									}
 									else
 									{
-										trackValue += $gas(currentLink).innerHTML;
+										trackValue += $gas(currentLink).html();
 									}
 									myGAS.trackPage(trackValue);
 								});
@@ -483,7 +483,7 @@ var GAS = function(account, settings){
 								}
 								else
 								{
-									trackValue += $gas(currentLink).innerHTML;
+									trackValue += $gas(currentLink).html();
 								}
 								myGAS.trackPage(trackValue);
 								done = true;
@@ -510,7 +510,7 @@ var GAS = function(account, settings){
 								}
 								else
 								{
-									trackValue += $gas(currentLink).innerHTML;
+									trackValue += $gas(currentLink).html();
 								}
 								myGAS.trackPage(trackValue);
 								done = true;
