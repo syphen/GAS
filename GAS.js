@@ -284,15 +284,23 @@ var GAS = function(account, settings){
 		if(myGAS.settings.debug){
 			GASConsole('Track Event', category, action, label, value);
 		}
+		var pageTracker = myGAS.tracker;
 		try{
-			if(value.toString().search(/^-?[0-9]+$/) == 0){
+			if((value != undefined) && (value.toString().search(/^-?[0-9]+$/) == 0)){
 				pageTracker._trackEvent(category, action, label, value.parseInt());
 			}
 			else {
-				pageTracker._trackEvent(category, action, label+'|'+value);
+				if(value != undefined){
+					label = label +'|'+value;
+				}
+				pageTracker._trackEvent(category, action, label);
 			}
 		}
-		catch(err){}
+		catch(err){
+			if(myGAS.settings.debug){
+				GASConsole('Track Event Catch', err);
+			}
+		}
 	};
 	
 	//Historic 'run' function
