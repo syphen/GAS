@@ -190,6 +190,7 @@ var GAS = function(account, settings){
 		page: '',
 		base: window.location.href.substring(0,window.location.href.lastIndexOf("/")+1),
 		files: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'zip', 'mp3'],
+		spider:true,
 		debug:false,
 		trackPage:true,
 		trackOutbound:true,
@@ -270,7 +271,6 @@ var GAS = function(account, settings){
 	this.trackPage = function(page){
 		var myGAS = this;
 		if(myGAS.settings.debug){
-			alert('test');
 			GASConsole('Track Page', page);
 		}
 		var pageTracker = myGAS.tracker;
@@ -343,7 +343,7 @@ var GAS = function(account, settings){
 		catch(err){}
 		
 		
-		if(pageTracker){
+		if(pageTracker && myGAS.settings.spider){
 			//Begin Link Spider
 			$gas("a").each(function(linkIndex, currentLink){
 				var done = false;
