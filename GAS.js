@@ -581,6 +581,7 @@ var GAS = function(account, settings){
 									trackValue += $gas(currentLink).html();
 								}
 								myGAS.trackPage(trackValue);
+								alert('test');
 							});
 							done = true;
 						}
