@@ -380,19 +380,21 @@ var GAS = function(account, settings){
 								}
 							}
 							if(!done && trackAs == 'hash'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/";
-								if(trackWith != ''){
-									trackValue += trackWith;
-								}
-								else if (myGAS.settings.trackUsingHref)
-								{
-									trackValue += $gas(currentLink).attr("href");								
-								}
-								else
-								{
-									trackValue += $gas(currentLink).html();
-								}
-								myGAS.trackPage(trackValue);
+								$gas(currentLink).click(function(){
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/";
+									if(trackWith != ''){
+										trackValue += trackWith;
+									}
+									else if (myGAS.settings.trackUsingHref)
+									{
+										trackValue += $gas(currentLink).attr("href");								
+									}
+									else
+									{
+										trackValue += $gas(currentLink).html();
+									}
+									myGAS.trackPage(trackValue);
+								});
 								done = true;
 							}
 						}
@@ -420,19 +422,21 @@ var GAS = function(account, settings){
 								done = true;
 							}
 							if(!done && trackAs == 'lightbox'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/";
-								if(trackWith != ''){
-									trackValue += trackWith;
-								}
-								else if (myGAS.settings.trackUsingHref)
-								{
-									trackValue += $gas(currentLink).attr("href");								
-								}
-								else
-								{
-									trackValue += $gas(currentLink).html();
-								}
-								myGAS.trackPage(trackValue);
+								$gas(currentLink).click(function(){
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/";
+									if(trackWith != ''){
+										trackValue += trackWith;
+									}
+									else if (myGAS.settings.trackUsingHref)
+									{
+										trackValue += $gas(currentLink).attr("href");								
+									}
+									else
+									{
+										trackValue += $gas(currentLink).html();
+									}
+									myGAS.trackPage(trackValue);
+								});
 								done = true;
 							}
 						}
@@ -465,20 +469,22 @@ var GAS = function(account, settings){
 								}
 							});
 							if(!done && trackAs == 'file'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/";
-								if(trackWith != ''){
-									trackValue += trackWith;
-								}
-								else if (trackUsingHref)
-								{
-									trackValue += $gas(currentLink).attr("href");								
-								}
-								else
-								{
-									trackValue += $gas(currentLink).html();
-								}
-									
-								myGAS.trackPage(trackValue);
+								$gas(currentLink).click(function(){
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/";
+									if(trackWith != ''){
+										trackValue += trackWith;
+									}
+									else if (trackUsingHref)
+									{
+										trackValue += $gas(currentLink).attr("href");								
+									}
+									else
+									{
+										trackValue += $gas(currentLink).html();
+									}
+										
+									myGAS.trackPage(trackValue);
+								});
 								done = true;
 							}
 						}
@@ -506,19 +512,21 @@ var GAS = function(account, settings){
 								done = true;
 							}
 							if(!done && trackAs == 'outbound'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/";
-								if(trackWith != ''){
-									trackValue += trackWith;
-								}
-								else if (myGAS.settings.trackUsingHref)
-								{
-									trackValue += $gas(currentLink).attr("href");								
-								}
-								else
-								{
-									trackValue += $gas(currentLink).html();
-								}
-								myGAS.trackPage(trackValue);
+								$gas(currentLink).click(function(){
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/";
+									if(trackWith != ''){
+										trackValue += trackWith;
+									}
+									else if (myGAS.settings.trackUsingHref)
+									{
+										trackValue += $gas(currentLink).attr("href");								
+									}
+									else
+									{
+										trackValue += $gas(currentLink).html();
+									}
+									myGAS.trackPage(trackValue);
+								});
 								done = true;
 							}
 						}
@@ -536,19 +544,21 @@ var GAS = function(account, settings){
 								done = true;
 							}
 							if(!done && trackAs == 'mail'){
-								var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/";
-								if(trackWith != ''){
-									trackValue += trackWith;
-								}
-								else if (myGAS.settings.trackUsingHref)
-								{
-									trackValue += $gas(currentLink).attr("href");								
-								}
-								else
-								{
-									trackValue += $gas(currentLink).html();
-								}
-								myGAS.trackPage(trackValue);
+								$gas(currentLink).click(function(){
+									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/";
+									if(trackWith != ''){
+										trackValue += trackWith;
+									}
+									else if (myGAS.settings.trackUsingHref)
+									{
+										trackValue += $gas(currentLink).attr("href");								
+									}
+									else
+									{
+										trackValue += $gas(currentLink).html();
+									}
+									myGAS.trackPage(trackValue);
+								});
 								done = true;
 							}
 						}
@@ -557,19 +567,21 @@ var GAS = function(account, settings){
 						//Checks if link doesn't fall into any of these categories, using 'trackAs'
 						default:
 						if(!done && trackAs != ''){
-							var trackValue = myGAS.settings.page + "/" + trackAs + "/";
-							if(trackWith != ''){
-								trackValue += trackWith;
-							}
-							else if (myGAS.settings.trackUsingHref)
-							{
-								trackValue += $gas(currentLink).attr("href");
-							}
-							else
-							{
-								trackValue += $gas(currentLink).html();
-							}
-							myGAS.trackPage(trackValue);
+							$gas(currentLink).click(function(){
+								var trackValue = myGAS.settings.page + "/" + trackAs + "/";
+								if(trackWith != ''){
+									trackValue += trackWith;
+								}
+								else if (myGAS.settings.trackUsingHref)
+								{
+									trackValue += $gas(currentLink).attr("href");
+								}
+								else
+								{
+									trackValue += $gas(currentLink).html();
+								}
+								myGAS.trackPage(trackValue);
+							});
 							done = true;
 						}
 					}
