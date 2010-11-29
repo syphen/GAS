@@ -352,8 +352,12 @@ var GAS = function(account, settings){
 					done = true;
 				}
 				var trackAs = '';
+				var trackWith = '';
 				if($gas(currentLink).attr("trackas") && ($gas(currentLink).attr("trackas") != '')){
 					trackAs = $gas(currentLink).attr("trackas").toLowerCase();
+				}
+				if($gas(currentLink).attr("trackwith") && ($gas(currentLink).attr("trackwith") != '')){
+					trackWith = $gas(currentLink).attr("trackwith");
 				}
 				
 				//Runs the spider based on the order from 'linkOrder' in the settings
@@ -525,6 +529,25 @@ var GAS = function(account, settings){
 							}
 						}
 						break;
+						
+						//Checks if link doesn't fall into any of these categories, using 'trackAs'
+						default:
+						if(!done && trackAs != ''){
+							var trackValue = myGAS.settings.page + "/" + trackAs + "/";
+							if(trackWith != ''){
+								trackValue += trackWith;
+							}
+							else if (myGAS.settings.trackUsingHref)
+							{
+								trackValue += $gas(currentLink).attr("href");
+							}
+							else
+							{
+								trackValue += $gas(currentLink).html();
+							}
+							myGAS.trackPage(trackValue);
+							done = true;
+						}
 					}
 				}
 			});
