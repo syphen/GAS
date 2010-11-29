@@ -271,6 +271,7 @@ var GAS = function(account, settings){
 		var myGAS = this;
 		if(myGAS.settings.debug){
 			GASConsole('Track Page', page);
+			alert('test');
 		}
 		var pageTracker = myGAS.tracker;
 		try{
@@ -581,7 +582,6 @@ var GAS = function(account, settings){
 									trackValue += $gas(currentLink).html();
 								}
 								myGAS.trackPage(trackValue);
-								alert('test');
 							});
 							done = true;
 						}
