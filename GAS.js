@@ -566,7 +566,7 @@ var GAS = function(account, settings){
 						
 						//Checks if 'trackas' is set to 'Custom'
 						case 'Custom':
-						if(!done && trackAs != ''){
+						if(!done && trackAs == 'Custom'){
 							$gas(currentLink).click(function(){
 								var trackValue = myGAS.settings.page + "/"
 								if(trackWith != ''){
