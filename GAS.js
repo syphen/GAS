@@ -270,8 +270,8 @@ var GAS = function(account, settings){
 	this.trackPage = function(page){
 		var myGAS = this;
 		if(myGAS.settings.debug){
-			GASConsole('Track Page', page);
 			alert('test');
+			GASConsole('Track Page', page);
 		}
 		var pageTracker = myGAS.tracker;
 		try{
