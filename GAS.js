@@ -207,7 +207,7 @@ var GAS = function(account, settings){
 		categoryLightbox:'Lightbox',
 		categoryMail:'Mail',
 		categoryForm:'Form',
-		linkOrder:['Hash', 'Lightbox', 'File', 'Outbound', 'Mail']
+		linkOrder:['Custom', 'Hash', 'Lightbox', 'File', 'Outbound', 'Mail']
 	};
 	
 	this.init = function(){
@@ -564,11 +564,11 @@ var GAS = function(account, settings){
 						}
 						break;
 						
-						//Checks if link doesn't fall into any of these categories, using 'trackAs'
-						default:
+						//Checks if 'trackas' is set to 'Custom'
+						case 'Custom':
 						if(!done && trackAs != ''){
 							$gas(currentLink).click(function(){
-								var trackValue = myGAS.settings.page + "/" + trackAs + "/";
+								var trackValue = myGAS.settings.page + "/"
 								if(trackWith != ''){
 									trackValue += trackWith;
 								}
@@ -584,6 +584,7 @@ var GAS = function(account, settings){
 							});
 							done = true;
 						}
+						break;
 					}
 				}
 			});
