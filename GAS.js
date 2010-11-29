@@ -567,9 +567,6 @@ var GAS = function(account, settings){
 						//Checks if 'trackas' is set to 'Custom'
 						case 'Custom':
 						if(!done && trackAs == 'custom'){
-							if(myGAS.settings.debug){
-								console.log('Custom Set', currentLink);
-							}
 							$gas(currentLink).click(function(){
 								var trackValue = myGAS.settings.page + "/"
 								if(trackWith != ''){
@@ -583,7 +580,6 @@ var GAS = function(account, settings){
 								{
 									trackValue += $gas(currentLink).html();
 								}
-								alert('Custom');
 								myGAS.trackPage(trackValue);
 							});
 							done = true;
