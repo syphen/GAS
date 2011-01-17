@@ -685,12 +685,21 @@ var GAS = function(account, settings){
 					});
 				}
 				
+				var trackWith = '';
+				
+				if($gas(myForm).attr("trackwith") && ($gas(myForm).attr("trackwith") != '')){
+					trackWith = $gas(myForm).attr("trackwith");
+				}
+				
 				//Form tracking if 'trackForm' is enabled in the settings
 				if(myGAS.settings.trackForm){
 					$gas(myForm).submit(function(){
 						var formName = getObjForm(this,myFormIndex);
 						var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryForm + "/" + formName + "/Submit";
 						myGAS.trackEvent(formName,"Submit");
+						if(trackWith != ''){
+							trackValue = trackWith;
+						}
 						myGAS.trackPage(trackValue);
 					});
 				}
