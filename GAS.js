@@ -165,6 +165,7 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
  */
 jQuery.noConflict();
 $gas = window.jQuery;
+var GASapi;
 
 var getObjForm = function(obj, myFormIndex){
 	var myParent = obj;
@@ -174,6 +175,17 @@ var getObjForm = function(obj, myFormIndex){
 	var formName=(($gas(myParent).attr("name")!=undefined)&&($gas(myParent).attr("name")!="")&&($gas(myParent).attr("name")!=null))?$gas(myParent).attr("name"):(($gas(myParent).attr("id")!=undefined)&&($gas(myParent).attr("id")!="")&&($gas(myParent).attr("id")!=null))?$gas(myParent).attr("id"):"form"+myFormIndex;
 	return formName;
 };
+
+var GASapiCheck = function(gasObj){
+	if (typeof(_gat) == 'object')
+	{
+		gasObj.tracker =_gat._createTracker(gasObj.account);
+	} else {
+		$(document.body).animate({'display':'block'}, 1000, function(){
+			GASapiCheck(gasObj);
+		}
+	}
+}
 
 var GASConsole = function(){
 	if(typeof(console) !== 'undefined' && console != null) {
@@ -224,7 +236,7 @@ var GAS = function(account, settings){
 		if(myGAS.settings.debug){
 			GASConsole('Init');
 		}
-		myGAS.tracker = _gat._createTracker(myGAS.account);
+		GASapiCheck(myGAS)
 	};
 	this.init();
 	
@@ -234,7 +246,7 @@ var GAS = function(account, settings){
 			GASConsole('Set Domain');
 		}
 		myGAS.domain = domain;
-		myGAS.tracker = _setDomainName(myGAS.domain);
+		myGAS.tracker = myGAS.tracker._setDomainName(myGAS.domain);
 	};
 	
 	this.addVar = function(variable){
