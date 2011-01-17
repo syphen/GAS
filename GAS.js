@@ -182,7 +182,7 @@ var GASapiCheck = function(gasObj){
 		gasObj.tracker =_gat._createTracker(gasObj.account);
 	}
 	else {
-		$(document.body).animate({'display':'block'}, 1000, function(){
+		$gas(document.body).animate({'display':'block'}, 1000, function(){
 			GASapiCheck(gasObj);
 		});
 	}
