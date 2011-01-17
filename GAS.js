@@ -186,7 +186,7 @@ var GASapiCheck = function(gasObj){
 	}
 	else {
 		if(gasObj.settings.debug){
-			GASConsole('GA API Not Set');
+			//GASConsole('GA API Not Set');
 		}
 		$gas(document.body).animate({'display':'block'}, 500, function(){
 			GASapiCheck(gasObj);
