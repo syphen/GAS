@@ -180,12 +180,12 @@ var GASapiCheck = function(gasObj){
 	if (typeof(_gat) == 'object')
 	{
 		gasObj.tracker =_gat._createTracker(gasObj.account);
-		if(myGAS.settings.debug){
+		if(gasObj.settings.debug){
 			GASConsole('GA API Set');
 		}
 	}
 	else {
-		if(myGAS.settings.debug){
+		if(gasObj.settings.debug){
 			GASConsole('GA API Not Set');
 		}
 		$gas(document.body).animate({'display':'block'}, 500, function(){
