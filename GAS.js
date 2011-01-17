@@ -180,10 +180,11 @@ var GASapiCheck = function(gasObj){
 	if (typeof(_gat) == 'object')
 	{
 		gasObj.tracker =_gat._createTracker(gasObj.account);
-	} else {
+	}
+	else {
 		$(document.body).animate({'display':'block'}, 1000, function(){
 			GASapiCheck(gasObj);
-		}
+		});
 	}
 }
 
