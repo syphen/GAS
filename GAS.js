@@ -377,7 +377,8 @@ var GAS = function(account, settings){
 									{
 										trackValue += $gas(currentLink).html();
 									}
-									myGAS.trackPage(trackValue);
+									myGAS.trackEvent('Click', 'Outbound', trackValue);
+									//myGAS.trackPage(trackValue);
 								});
 								done = true;
 							}
@@ -395,7 +396,8 @@ var GAS = function(account, settings){
 									{
 										trackValue += $gas(currentLink).html();
 									}
-									myGAS.trackPage(trackValue);
+									myGAS.trackEvent('Click', 'Outbound', trackValue);
+									//myGAS.trackPage(trackValue);
 								});
 								done = true;
 							}
