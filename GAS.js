@@ -272,7 +272,7 @@ var GAS = function(account, settings){
 										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									switch(myGAS.typeOutbound.toLowerCase()){
+									switch(myGAS.settings.typeOutbound.toLowerCase()){
 										case 'event':
 										myGAS.trackEvent('Click', myGAS.settings.categoryOutbound, trackValue);
 										break;
@@ -308,7 +308,7 @@ var GAS = function(account, settings){
 										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									switch(myGAS.typeOutbound.toLowerCase()){
+									switch(myGAS.settings.typeOutbound.toLowerCase()){
 										case 'event':
 										myGAS.trackEvent('Click', myGAS.settings.categoryOutbound, trackValue);
 										break;
@@ -332,7 +332,7 @@ var GAS = function(account, settings){
 									$gas(currentLink).click(function(){
 										var trackLink = $gas(currentLink).attr("href").split('#')[1];
 										var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/" + trackLink;
-										switch(myGAS.typeHash.toLowerCase()){
+										switch(myGAS.settings.typeHash.toLowerCase()){
 											case 'event':
 											myGAS.trackEvent('Click', myGAS.settings.categoryHash, trackLink);
 											break;
@@ -369,7 +369,7 @@ var GAS = function(account, settings){
 										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									switch(myGAS.typeHash.toLowerCase()){
+									switch(myGAS.settings.typeHash.toLowerCase()){
 										case 'event':
 										myGAS.trackEvent('Click', myGAS.settings.categoryHash, trackLink);
 										break;
@@ -411,7 +411,7 @@ var GAS = function(account, settings){
 										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									switch(myGAS.typeLightbox.toLowerCase()){
+									switch(myGAS.settings.typeLightbox.toLowerCase()){
 										case 'event':
 										myGAS.trackEvent('Click', myGAS.settings.categoryLightbox, trackLink);
 										break;
@@ -447,7 +447,7 @@ var GAS = function(account, settings){
 										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									switch(myGAS.typeLightbox.toLowerCase()){
+									switch(myGAS.settings.typeLightbox.toLowerCase()){
 										case 'event':
 										myGAS.trackEvent('Click', myGAS.settings.categoryLightbox, trackLink);
 										break;
@@ -492,7 +492,7 @@ var GAS = function(account, settings){
 												trackLink = $gas(currentLink).html();
 												trackValue += $gas(currentLink).html();
 											}
-											switch(myGAS.typeFile.toLowerCase()){
+											switch(myGAS.settings.typeFile.toLowerCase()){
 												case 'event':
 												myGAS.trackEvent('Click', myGAS.settings.categoryFile, trackLink);
 												break;
@@ -530,7 +530,7 @@ var GAS = function(account, settings){
 										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									switch(myGAS.typeFile.toLowerCase()){
+									switch(myGAS.settings.typeFile.toLowerCase()){
 										case 'event':
 										myGAS.trackEvent('Click', myGAS.settings.categoryFile, trackLink);
 										break;
@@ -551,7 +551,7 @@ var GAS = function(account, settings){
 								var email = (($gas(currentLink).attr("href").split(":",2))[1].split("?"))[0];
 								$gas(currentLink).click(function(){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/" + email;
-									switch(myGAS.typeFile.toLowerCase()){
+									switch(myGAS.settings.typeFile.toLowerCase()){
 										case 'event':
 										myGAS.trackEvent('Click', myGAS.settings.categoryMail, email);
 										break;
@@ -587,7 +587,7 @@ var GAS = function(account, settings){
 										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									switch(myGAS.typeFile.toLowerCase()){
+									switch(myGAS.settings.typeFile.toLowerCase()){
 										case 'event':
 										myGAS.trackEvent('Click', myGAS.settings.categoryMail, trackLink);
 										break;
