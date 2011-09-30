@@ -227,9 +227,13 @@ var GAS = function(account, settings){
 					done = true;
 				}
 				var trackAs = '';
+				var trackType = 'Custom';
 				var trackWith = '';
 				if($gas(currentLink).attr("trackas") && ($gas(currentLink).attr("trackas") != '')){
 					trackAs = $gas(currentLink).attr("trackas").toLowerCase();
+				}
+				if($gas(currentLink).attr("tracktype") && ($gas(currentLink).attr("tracktype") != '')){
+					trackType = $gas(currentLink).attr("tracktype").toLowerCase();
 				}
 				if($gas(currentLink).attr("trackwith") && ($gas(currentLink).attr("trackwith") != '')){
 					trackWith = $gas(currentLink).attr("trackwith");
@@ -583,7 +587,7 @@ var GAS = function(account, settings){
 								{
 									trackLink = $gas(currentLink).html();
 								}
-								myGAS.trackEvent('Click', 'Custom', trackLink);
+								myGAS.trackEvent('Click', trackType, trackLink);
 							});
 							done = true;
 						}
