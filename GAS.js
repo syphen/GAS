@@ -233,7 +233,7 @@ var GAS = function(account, settings){
 					trackAs = $gas(currentLink).attr("trackas").toLowerCase();
 				}
 				if($gas(currentLink).attr("tracktype") && ($gas(currentLink).attr("tracktype") != '')){
-					trackType = $gas(currentLink).attr("tracktype").toLowerCase();
+					trackType = $gas(currentLink).attr("tracktype");
 				}
 				if($gas(currentLink).attr("trackwith") && ($gas(currentLink).attr("trackwith") != '')){
 					trackWith = $gas(currentLink).attr("trackwith");
@@ -253,6 +253,13 @@ var GAS = function(account, settings){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/";
 									if(trackWith != ''){
 										trackLink = trackWith;
+										try{
+											var tempStr = eval(trackWith);
+											if(typeof tempStr == 'string'){
+												trackLink = tempStr;
+											}
+										}catch(error){
+										}
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
@@ -282,6 +289,13 @@ var GAS = function(account, settings){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/";
 									if(trackWith != ''){
 										trackLink = trackWith;
+										try{
+											var tempStr = eval(trackWith);
+											if(typeof tempStr == 'string'){
+												trackLink = tempStr;
+											}
+										}catch(error){
+										}
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
@@ -336,6 +350,13 @@ var GAS = function(account, settings){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/";
 									if(trackWith != ''){
 										trackLink = trackWith;
+										try{
+											var tempStr = eval(trackWith);
+											if(typeof tempStr == 'string'){
+												trackLink = tempStr;
+											}
+										}catch(error){
+										}
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
@@ -371,6 +392,13 @@ var GAS = function(account, settings){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/";
 									if(trackWith != ''){
 										trackLink = trackWith;
+										try{
+											var tempStr = eval(trackWith);
+											if(typeof tempStr == 'string'){
+												trackLink = tempStr;
+											}
+										}catch(error){
+										}
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
@@ -400,6 +428,13 @@ var GAS = function(account, settings){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/";
 									if(trackWith != ''){
 										trackLink = trackWith;
+										try{
+											var tempStr = eval(trackWith);
+											if(typeof tempStr == 'string'){
+												trackLink = tempStr;
+											}
+										}catch(error){
+										}
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
@@ -438,6 +473,13 @@ var GAS = function(account, settings){
 											var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/" + file + "/";
 											if(trackWith != ''){
 												trackLink = trackWith;
+												try{
+													var tempStr = eval(trackWith);
+													if(typeof tempStr == 'string'){
+														trackLink = tempStr;
+													}
+												}catch(error){
+												}
 												trackValue += trackWith;
 											}
 											else if (myGAS.settings.trackUsingHref)
@@ -469,6 +511,13 @@ var GAS = function(account, settings){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/";
 									if(trackWith != ''){
 										trackLink = trackWith;
+										try{
+											var tempStr = eval(trackWith);
+											if(typeof tempStr == 'string'){
+												trackLink = tempStr;
+											}
+										}catch(error){
+										}
 										trackValue += trackWith;
 									}
 									else if (trackUsingHref)
@@ -519,6 +568,13 @@ var GAS = function(account, settings){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/";
 									if(trackWith != ''){
 										trackLink = trackWith;
+										try{
+											var tempStr = eval(trackWith);
+											if(typeof tempStr == 'string'){
+												trackLink = tempStr;
+											}
+										}catch(error){
+										}
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
@@ -553,6 +609,13 @@ var GAS = function(account, settings){
 								var trackValue = myGAS.settings.page + "/"
 								if(trackWith != ''){
 									trackLink = trackWith;
+									try{
+										var tempStr = eval(trackWith);
+										if(typeof tempStr == 'string'){
+											trackLink = tempStr;
+										}
+									}catch(error){
+									}
 									trackValue += trackWith;
 								}
 								else if (myGAS.settings.trackUsingHref)
@@ -578,6 +641,13 @@ var GAS = function(account, settings){
 								var trackLink = '';
 								if(trackWith != ''){
 									trackLink = trackWith;
+									try{
+										var tempStr = eval(trackWith);
+										if(typeof tempStr == 'string'){
+											trackLink = tempStr;
+										}
+									}catch(error){
+									}
 								}
 								else if (myGAS.settings.trackUsingHref)
 								{
