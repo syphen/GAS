@@ -71,7 +71,12 @@ var GAS = function(account, settings){
 		categoryLightbox:'Lightbox',
 		categoryMail:'Mail',
 		categoryForm:'Form',
-		linkOrder:['Custom', 'Hash', 'Lightbox', 'File', 'Outbound', 'Mail']
+		typeOutbound:'Page',
+		typeFile:'Page',
+		typeHash:'Page',
+		typeLighbox:'Page',
+		typeMail:'Page',
+		linkOrder:['Custom', 'Event', 'Hash', 'Lightbox', 'File', 'Outbound', 'Mail']
 	};
 	
 	this.init = function(){
@@ -240,39 +245,59 @@ var GAS = function(account, settings){
 						if(!done && myGAS.settings.trackOutbound){
 							if(($gas(currentLink).attr("href").indexOf('://') > -1) && $gas(currentLink).attr("href").indexOf(myGAS.settings.base) == -1){
 								$gas(currentLink).click(function(){
+									var trackLink = '';
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/";
 									if(trackWith != ''){
+										trackLink = trackWith;
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
 									{
+										trackLink = $gas(currentLink).attr("href");
 										trackValue += $gas(currentLink).attr("href");								
 									}
 									else
 									{
+										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									myGAS.trackEvent('Click', 'Outbound', trackValue);
-									//myGAS.trackPage(trackValue);
+									switch(myGAS.typeOutbound.toLowerCase()){
+										case 'event':
+										myGAS.trackEvent('Click', myGAS.settings.categoryOutbound, trackValue);
+										break;
+										
+										default:
+										myGAS.trackPage(trackValue);
+									}
 								});
 								done = true;
 							}
 							if(!done && trackAs == 'outbound'){
 								$gas(currentLink).click(function(){
+									var trackLink = '';
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryOutbound + "/";
 									if(trackWith != ''){
+										trackLink = trackWith;
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
 									{
+										trackLink = $gas(currentLink).attr("href");
 										trackValue += $gas(currentLink).attr("href");								
 									}
 									else
 									{
+										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									myGAS.trackEvent('Click', 'Outbound', trackValue);
-									//myGAS.trackPage(trackValue);
+									switch(myGAS.typeOutbound.toLowerCase()){
+										case 'event':
+										myGAS.trackEvent('Click', myGAS.settings.categoryOutbound, trackValue);
+										break;
+										
+										default:
+										myGAS.trackPage(trackValue);
+									}
 								});
 								done = true;
 							}
@@ -287,27 +312,46 @@ var GAS = function(account, settings){
 								var pageLoc = (window.location.href.split('#'))[0];
 								if(((linkLoc == pageLoc) || (linkLoc == '')) && ($gas(currentLink).attr("href").split('#')[1] != '')){
 									$gas(currentLink).click(function(){
-										var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/" + $gas(currentLink).attr("href").split('#')[1];
-										myGAS.trackPage(trackValue);
+										var trackLink = $gas(currentLink).attr("href").split('#')[1];
+										var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/" + trackLink;
+										switch(myGAS.typeHash.toLowerCase()){
+											case 'event':
+											myGAS.trackEvent('Click', myGAS.settings.categoryHash, trackLink);
+											break;
+											
+											default:
+											myGAS.trackPage(trackValue);
+										}
 									});
 									done = true;
 								}
 							}
 							if(!done && trackAs == 'hash'){
 								$gas(currentLink).click(function(){
+									var trackLink = '';
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryHash + "/";
 									if(trackWith != ''){
+										trackLink = trackWith;
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
 									{
+										trackLink = $gas(currentLink).attr("href");
 										trackValue += $gas(currentLink).attr("href");								
 									}
 									else
 									{
+										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									myGAS.trackPage(trackValue);
+									switch(myGAS.typeHash.toLowerCase()){
+										case 'event':
+										myGAS.trackEvent('Click', myGAS.settings.categoryHash, trackLink);
+										break;
+										
+										default:
+										myGAS.trackPage(trackValue);
+									}
 								});
 								done = true;
 							}
@@ -319,37 +363,59 @@ var GAS = function(account, settings){
 						if(!done && myGAS.settings.trackLightbox){
 							if($gas(currentLink).hasClass(myGAS.settings.lightboxClass)){
 								$gas(currentLink).click(function(){
+									var trackLink = '';
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/";
 									if(trackWith != ''){
+										trackLink = trackWith;
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
 									{
+										trackLink = $gas(currentLink).attr("href");
 										trackValue += $gas(currentLink).attr("href");								
 									}
 									else
 									{
+										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									myGAS.trackPage(trackValue);
+									switch(myGAS.typeLightbox.toLowerCase()){
+										case 'event':
+										myGAS.trackEvent('Click', myGAS.settings.categoryLightbox, trackLink);
+										break;
+										
+										default:
+										myGAS.trackPage(trackValue);
+									}
 								});
 								done = true;
 							}
 							if(!done && trackAs == 'lightbox'){
 								$gas(currentLink).click(function(){
+									var trackLink = '';
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryLightbox + "/";
 									if(trackWith != ''){
+										trackLink = trackWith;
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
 									{
+										trackLink = $gas(currentLink).attr("href");
 										trackValue += $gas(currentLink).attr("href");								
 									}
 									else
 									{
+										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									myGAS.trackPage(trackValue);
+									switch(myGAS.typeLightbox.toLowerCase()){
+										case 'event':
+										myGAS.trackEvent('Click', myGAS.settings.categoryLightbox, trackLink);
+										break;
+										
+										default:
+										myGAS.trackPage(trackValue);
+									}
 								});
 								done = true;
 							}
@@ -364,19 +430,30 @@ var GAS = function(account, settings){
 									var file=myGAS.settings.files[index];
 									if(($gas(currentLink).attr("href").indexOf("."+file) > -1)){
 										$gas(currentLink).click(function(){
+											var trackLink = '';
 											var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/" + file + "/";
 											if(trackWith != ''){
+												trackLink = trackWith;
 												trackValue += trackWith;
 											}
 											else if (myGAS.settings.trackUsingHref)
 											{
+												trackLink = $gas(currentLink).attr("href");
 												trackValue += $gas(currentLink).attr("href");								
 											}
 											else
 											{
+												trackLink = $gas(currentLink).html();
 												trackValue += $gas(currentLink).html();
 											}
-											myGAS.trackPage(trackValue);
+											switch(myGAS.typeFile.toLowerCase()){
+												case 'event':
+												myGAS.trackEvent('Click', myGAS.settings.categoryFile, trackLink);
+												break;
+												
+												default:
+												myGAS.trackPage(trackValue);
+											}
 										});
 										done = true;
 									}
@@ -384,20 +461,30 @@ var GAS = function(account, settings){
 							});
 							if(!done && trackAs == 'file'){
 								$gas(currentLink).click(function(){
+									var trackLink = '';
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryFile + "/";
 									if(trackWith != ''){
+										trackLink = trackWith;
 										trackValue += trackWith;
 									}
 									else if (trackUsingHref)
 									{
-										trackValue += $gas(currentLink).attr("href");								
+										trackLink = $gas(currentLink).attr("href");
+										trackValue += $gas(currentLink).attr("href");
 									}
 									else
 									{
+										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
+									switch(myGAS.typeFile.toLowerCase()){
+										case 'event':
+										myGAS.trackEvent('Click', myGAS.settings.categoryFile, trackLink);
+										break;
 										
-									myGAS.trackPage(trackValue);
+										default:
+										myGAS.trackPage(trackValue);
+									}
 								});
 								done = true;
 							}
@@ -411,25 +498,43 @@ var GAS = function(account, settings){
 								var email = (($gas(currentLink).attr("href").split(":",2))[1].split("?"))[0];
 								$gas(currentLink).click(function(){
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/" + email;
-									myGAS.trackPage(trackValue);
+									switch(myGAS.typeFile.toLowerCase()){
+										case 'event':
+										myGAS.trackEvent('Click', myGAS.settings.categoryMail, email);
+										break;
+										
+										default:
+										myGAS.trackPage(trackValue);
+									}
 								});
 								done = true;
 							}
 							if(!done && trackAs == 'mail'){
 								$gas(currentLink).click(function(){
+									var trackLink = '';
 									var trackValue = myGAS.settings.page + "/" + myGAS.settings.categoryMail + "/";
 									if(trackWith != ''){
+										trackLink = trackWith;
 										trackValue += trackWith;
 									}
 									else if (myGAS.settings.trackUsingHref)
 									{
+										trackLink = $gas(currentLink).attr("href");
 										trackValue += $gas(currentLink).attr("href");								
 									}
 									else
 									{
+										trackLink = $gas(currentLink).html();
 										trackValue += $gas(currentLink).html();
 									}
-									myGAS.trackPage(trackValue);
+									switch(myGAS.typeFile.toLowerCase()){
+										case 'event':
+										myGAS.trackEvent('Click', myGAS.settings.categoryMail, trackLink);
+										break;
+										
+										default:
+										myGAS.trackPage(trackValue);
+									}
 								});
 								done = true;
 							}
@@ -440,19 +545,45 @@ var GAS = function(account, settings){
 						case 'Custom':
 						if(!done && trackAs == 'custom'){
 							$gas(currentLink).click(function(){
+								var trackLink = '';
 								var trackValue = myGAS.settings.page + "/"
 								if(trackWith != ''){
+									trackLink = trackWith;
 									trackValue += trackWith;
 								}
 								else if (myGAS.settings.trackUsingHref)
 								{
+									trackLink = $gas(currentLink).attr("href");
 									trackValue += $gas(currentLink).attr("href");
 								}
 								else
 								{
+									trackLink = $gas(currentLink).html();
 									trackValue += $gas(currentLink).html();
 								}
 								myGAS.trackPage(trackValue);
+							});
+							done = true;
+						}
+						break;
+						
+						//Checks if 'trackas' is set to 'Event'
+						case 'Event':
+						if(!done && trackAs == 'event'){
+							$gas(currentLink).click(function(){
+								var trackLink = '';
+								if(trackWith != ''){
+									trackLink = trackWith;
+								}
+								else if (myGAS.settings.trackUsingHref)
+								{
+									trackLink = $gas(currentLink).attr("href");
+								}
+								else
+								{
+									trackLink = $gas(currentLink).html();
+								}
+								myGAS.trackEvent('Click', 'Custom', trackLink);
 							});
 							done = true;
 						}
