@@ -74,7 +74,7 @@ var GAS = function(account, settings){
 		typeOutbound:'Page',
 		typeFile:'Page',
 		typeHash:'Page',
-		typeLighbox:'Page',
+		typeLightbox:'Page',
 		typeMail:'Page',
 		linkOrder:['Custom', 'Event', 'Hash', 'Lightbox', 'File', 'Outbound', 'Mail']
 	};
