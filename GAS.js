@@ -227,13 +227,17 @@ var GAS = function(account, settings){
 					done = true;
 				}
 				var trackAs = '';
-				var trackType = 'Custom';
+				var trackCat = 'Custom';
+				var trackAction = 'Click';
 				var trackWith = '';
 				if($gas(currentLink).attr("trackas") && ($gas(currentLink).attr("trackas") != '')){
 					trackAs = $gas(currentLink).attr("trackas").toLowerCase();
 				}
-				if($gas(currentLink).attr("tracktype") && ($gas(currentLink).attr("tracktype") != '')){
-					trackType = $gas(currentLink).attr("tracktype");
+				if($gas(currentLink).attr("trackcat") && ($gas(currentLink).attr("trackcat") != '')){
+					trackCat = $gas(currentLink).attr("trackcat");
+				}
+				if($gas(currentLink).attr("trackaction") && ($gas(currentLink).attr("trackaction") != '')){
+					trackAction = $gas(currentLink).attr("trackaction");
 				}
 				if($gas(currentLink).attr("trackwith") && ($gas(currentLink).attr("trackwith") != '')){
 					trackWith = $gas(currentLink).attr("trackwith");
@@ -657,7 +661,7 @@ var GAS = function(account, settings){
 								{
 									trackLink = $gas(currentLink).html();
 								}
-								myGAS.trackEvent('Click', trackType, trackLink);
+								myGAS.trackEvent(trackCat, trackAction, trackLink);
 							});
 							done = true;
 						}
