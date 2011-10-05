@@ -81,7 +81,7 @@ var GAS = function(account, settings){
 		categoryLightbox:'Lightbox',
 		categoryMail:'Mail',
 		categoryForm:'Form',
-		typeOutbound:'Page',
+		typeOutbound:'Event',
 		typeFile:'Page',
 		typeHash:'Page',
 		typeLightbox:'Page',
