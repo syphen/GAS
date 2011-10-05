@@ -11,13 +11,6 @@ t[h]}if(f.isEmptyObject(t)){var u=s.handle;u&&(u.elem=null),delete s.events,dele
  * http://gas.catalystinc.com/license
  */
 
-if(typeof window.jQuery != 'undefined'){
-	try{
-		var jq = document.createElement('script'); jq.type = 'text/javascript';
-		jq.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js';
-		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(jq, s);
-	} catch(){}
-}
 jQuery.noConflict();
 $gas = window.jQuery;
 
